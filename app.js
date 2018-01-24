@@ -5,10 +5,33 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+const passport = require('passport');
+
 var index = require('./routes/index');
 var users = require('./routes/users');
+const login = require('./routes/login');
+const crawler = require('./routes/crawler');
+const notification = require('./routes/notification');
+
+const config = require('./config/development_config');
 
 var app = express();
+
+// cors
+app.use(function (req, res, next) {
+  // Website you wish to allow to connect
+  res.header('Access-Control-Allow-Origin', '*');
+
+  // Request methods you wish to allow
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+
+  // Request headers you wish to allow
+  res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, x-access-token')
+  
+  res.header('Access-Control-Expose-Headers', 'x-access-token')
+
+  next()
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +45,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// passport-middleware
+app.use(require('express-session')({ secret: config.sessionSecret, resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/api/beach', login);
+app.use('/api/beach', crawler);
+app.use('/api/beach', notification);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
