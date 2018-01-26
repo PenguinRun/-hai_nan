@@ -118,7 +118,8 @@ CREATE TABLE targets (
     created_by uuid,
     created timestamp with time zone,
     modified_by uuid,
-    modified timestamp with time zone
+    modified timestamp with time zone,
+    point point
 );
 
 
@@ -160,7 +161,7 @@ COPY spatial_ref_sys  FROM stdin;
 -- Data for Name: targets; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY targets (id, title, description, geojson, ref_url, is_open, created_by, created, modified_by, modified) FROM stdin;
+COPY targets (id, title, description, geojson, ref_url, is_open, created_by, created, modified_by, modified, point) FROM stdin;
 \.
 
 
