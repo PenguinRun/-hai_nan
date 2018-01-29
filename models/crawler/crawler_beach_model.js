@@ -5,8 +5,7 @@ module.exports = function crawlerBeach(url) {
         request.get({
             url: url,
         }, function (err, res, body) {
-            console.log(JSON.parse(body).features[0].type);
-            resolve("success");
+            resolve(JSON.parse(body));
         })
     })
 }
