@@ -15,7 +15,7 @@ module.exports = function createNotification(data) {
                 console.log(err.stack)
                 reject(err)
             } else {
-                resolve(res.rows[0])
+                resolve(data)
             }
         })
     })
