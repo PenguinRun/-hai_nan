@@ -7,5 +7,7 @@ SESSION_SECRET = 'set your session secret'
 SECRET_KEY = 'set your secret key'
 
 DATABASE_IP = 'set your database ip'
+DATABASE_PORT = 5432
+DATABASE_NAME = 'set your database name'
 DATABASE_USER = 'set your database user'
 DATABASE_PASSWORD = 'set your database password'

@@ -1,3 +1,4 @@
+require('dotenv').config()
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -12,6 +13,7 @@ var users = require('./routes/users');
 const login = require('./routes/login');
 const crawler = require('./routes/crawler');
 const notification = require('./routes/notification');
+const beach = require('./routes/beach');
 
 const config = require('./config/development_config');
 
@@ -27,7 +29,7 @@ app.use(function (req, res, next) {
 
   // Request headers you wish to allow
   res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, x-access-token')
-  
+
   res.header('Access-Control-Expose-Headers', 'x-access-token')
 
   next()
@@ -55,6 +57,7 @@ app.use('/users', users);
 app.use('/api/beach', login);
 app.use('/api/beach', crawler);
 app.use('/api/beach', notification);
+app.use('/api/beach', beach);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

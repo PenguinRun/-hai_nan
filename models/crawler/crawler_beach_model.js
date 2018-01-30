@@ -1,9 +1,6 @@
 const request = require('request');
-
 const uuid = require('uuid/v4');
-
 const client = require('../../config/postgresql');
-
 const onTime = require('../../service/on_time');
 
 module.exports = function crawlerBeach(url) {
@@ -12,12 +9,12 @@ module.exports = function crawlerBeach(url) {
         const filterCityResult = [];
 
         // 取得全部城市資料
-        
+
         const cityName = await crawlerBeachAction.getAllCity(url);
 
         let result = [];
 
-        
+
         for (let i = 0; i < cityName.length; i += 1) {
             let cityData, beachData;
             cityData = await crawlerBeachAction.fliterCityData(url, cityName[i]);
