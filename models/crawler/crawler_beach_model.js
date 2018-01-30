@@ -9,24 +9,25 @@ module.exports = function crawlerBeach(url) {
         const filterCityResult = [];
 
         // 取得全部城市資料
-
         const cityName = await crawlerBeachAction.getAllCity(url);
 
         let result = [];
 
-
         for (let i = 0; i < cityName.length; i += 1) {
             let cityData, beachData;
+            // 切割城市資料
             cityData = await crawlerBeachAction.fliterCityData(url, cityName[i]);
+            // 切割海灘並重新合併
             beachData = await crawlerBeachAction.filterBeachData(cityData, cityName[i]);
             await result.push(beachData);
         }
+        // 拆解一層array
+        let merged = [].concat.apply([], result);
 
         // 將資料存進資料庫
-        for (let i = 0; i < result.length; i += 1) {
-            await insetToDatabase(result[i]);
+        for (let i = 0; i < merged.length; i += 1) {
+            await insetToDatabase(merged[i]);
         }
-
         resolve("匯入海灘資料成功！");
     })
 }
@@ -139,7 +140,7 @@ function insetToDatabase(data) {
     return new Promise((resolve, reject) => {
         const query = {
             text: 'INSERT INTO targets(id, title, description, geojson, ref_url, is_open, created_by, created, modified_by, modified) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-            values: [uuid(), data[0].title, "", data[0].geojson, "", false, "fd6e1fc0-e116-44c8-8bda-5de78e48568b", onTime(), "fd6e1fc0-e116-44c8-8bda-5de78e48568b", onTime()],
+            values: [uuid(), data.title, "", data.geojson, "", false, "fd6e1fc0-e116-44c8-8bda-5de78e48568b", onTime(), "fd6e1fc0-e116-44c8-8bda-5de78e48568b", onTime()],
         }
         client.query(query, (err, res) => {
             if (err) {
