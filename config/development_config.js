@@ -1,11 +1,11 @@
 require('dotenv').config()
 
 module.exports = {
-    mysql: {
-      host: process.env.HOST,
-      user: process.env.DATABASE_USER,
+    postgresql: {
+      host: process.env.DATABASE_IP,
+      name: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE
+      database: process.env.DATABASE_NAME
     },
     facebook: {
         id: process.env.FACEBOOK_APPID,

@@ -5,6 +5,6 @@ const CrawlerModifyMethod = require('../controllers/crawler/modify_controller');
 
 crawlerModifyMethod = new CrawlerModifyMethod();
 
-router.get('/crawler', crawlerModifyMethod.getBeachData);
+router.post('/crawler', crawlerModifyMethod.postBeachData);
 
 module.exports = router;

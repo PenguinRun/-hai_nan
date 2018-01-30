@@ -1,6 +1,12 @@
+const client = require('../../config/postgresql');
+
 module.exports = class GetNotification {
     // 提取淨灘通報
     getNotificationData(req, res, next) {
+        client.query('SELECT NOW()', (err, res) => {
+            console.log(err, res)
+            client.end()
+        })
         const data1 = {
             id: 1,
             targetID: 2,

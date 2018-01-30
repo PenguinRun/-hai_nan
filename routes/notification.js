@@ -11,5 +11,10 @@ modifyNotification = new ModifyNotification();
 router.get('/notification', getNotification.getNotificationData);
 // 建立淨灘通報
 router.post('/notification', modifyNotification.postNotificationData);
+// 更改建立通報
+router.put('/notification', modifyNotification.putNotificationData);
+// 刪除淨灘通報
+router.delete('/notification', modifyNotification.deleteNotificationData);
+
 
 module.exports = router;
