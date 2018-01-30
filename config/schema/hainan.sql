@@ -119,51 +119,12 @@ CREATE TABLE targets (
     created timestamp with time zone,
     modified_by uuid,
     modified timestamp with time zone,
-    point point
+    point point,
+    city character varying(64)
 );
 
 
 ALTER TABLE targets OWNER TO postgres;
-
---
--- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY events (id, target_id, title, description, contact, date_time, place, ref_url, created_by, created, modified_by, modified) FROM stdin;
-\.
-
-
---
--- Data for Name: members; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY members (id, fb_id, email, password, created, modified) FROM stdin;
-\.
-
-
---
--- Data for Name: reports; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY reports (id, target_id, description, image_url, is_open, created_by, created, modified_by, modified) FROM stdin;
-\.
-
-
---
--- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY spatial_ref_sys  FROM stdin;
-\.
-
-
---
--- Data for Name: targets; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY targets (id, title, description, geojson, ref_url, is_open, created_by, created, modified_by, modified, point) FROM stdin;
-\.
-
 
 --
 -- Name: events_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
