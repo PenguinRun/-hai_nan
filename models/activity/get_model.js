@@ -3,7 +3,7 @@ const client = require('../../config/postgresql');
 module.exports = function getNotification(id) {
     return new Promise((resolve, reject) => {
         const query = {
-            text: 'SELECT * from reports'
+            text: 'SELECT * from events'
         }
         client.query(query, async (err, res) => {
             if (err) {
@@ -13,13 +13,15 @@ module.exports = function getNotification(id) {
                 let result = [];
                 for (let key in res.rows) {
                     let data = {};
-                    data.id = res.rows[key].id;
                     data.targetID = res.rows[key].target_id;
                     let targetName = await getTargetName(res.rows[key].target_id);
                     data.targetName = targetName.title;
+                    data.title = res.rows[key].title;
                     data.description = res.rows[key].description;
-                    data.imageURL = res.rows[key].image_url;
-                    data.beachClear = res.rows[key].is_open;
+                    data.contact = res.rows[key].contact;
+                    data.dateTime = res.rows[key].date_time;
+                    data.place = res.rows[key].place;
+                    data.refURL = res.rows[key].ref_url;
                     data.auther = res.rows[key].created_by;
                     data.editor = res.rows[key].modified_by;
                     data.createDate = res.rows[key].created;

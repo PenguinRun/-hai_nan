@@ -14,6 +14,7 @@ const login = require('./routes/login');
 const crawler = require('./routes/crawler');
 const notification = require('./routes/notification');
 const beach = require('./routes/beach');
+const activity = require('./routes/activity');
 
 const config = require('./config/development_config');
 
@@ -58,6 +59,7 @@ app.use('/api/beach', login);
 app.use('/api/beach', crawler);
 app.use('/api/beach', notification);
 app.use('/api/beach', beach);
+app.use('/api/beach', activity);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,18 +5,17 @@ const deleteNotification = require('../../models/notification/delete_model');
 module.exports = class ModifyNotification {
     // 建立淨灘通報
     postNotificationData(req, res, next) {
+        // 缺少登入判斷
+
         const targetID = req.body.targetID;
         const description = req.body.description;
         const imageURL = req.body.imageURL;
-        const isOpen = req.body.beachClear;
+        const beachClean = req.body.beachClean;
 
         const notificationData = {
             targetID: targetID,
-            description: description,
             imageURL: imageURL,
-            isOpen: isOpen, 
-            createdBy: "fd6e1fc0-e116-44c8-8bda-5de78e48568b",
-            modifyBy: "fd6e1fc0-e116-44c8-8bda-5de78e48568b"
+            beachClean: beachClean,
         }
 
         for (let key in notificationData) {
@@ -24,21 +23,24 @@ module.exports = class ModifyNotification {
                 res.status(400).json({
                     result: {
                         state: "建立淨灘通報失敗！",
-                        err: "請輸入 " + key +" 值。"
+                        err: "請輸入 " + key + " 值。"
                     }
                 })
                 return;
             }
         }
 
+        notificationData.createdBy = "fd6e1fc0-e116-44c8-8bda-5de78e48568b";
+        notificationData.modifyBy = "fd6e1fc0-e116-44c8-8bda-5de78e48568b";
+        notificationData.description = description;
+
         createNotification(notificationData).then(result => {
             res.json({
                 result: {
-                    state: "建立淨灘通報成功！",
-                    createData: result
+                    result: result
                 }
             })
-        }, err =>{
+        }, err => {
             res.json({
                 result: err
             })
@@ -51,24 +53,22 @@ module.exports = class ModifyNotification {
         const targetID = req.body.targetID;
         const description = req.body.description;
         const imageURL = req.body.imageURL;
-        const isOpen = req.body.beachClear;
+        const beachClean = req.body.beachClean;
 
         const notificationData = {
             id: id,
             targetID: targetID,
             description: description,
             imageURL: imageURL,
-            isOpen: isOpen,
+            beachClean: beachClean,
             modifyBy: "e0dcd1aa-a24e-4d5a-a945-9ce885ad7bff"
         }
         updateNotification(notificationData).then(result => {
             res.json({
-                state: "更改淨灘通報成功！",
                 result: result
             })
         }, err => {
             res.json({
-                state: "更改淨灘通報失敗！",
                 result: err
             })
         })
@@ -79,12 +79,10 @@ module.exports = class ModifyNotification {
 
         deleteNotification(id).then(result => {
             res.json({
-                state: "刪除淨灘通報成功！",
-                result: "刪除編號： " + result + " 成功！"
+                result: result
             })
         }, err => {
             res.json({
-                state: "刪除淨灘通報失敗！",
                 result: err
             })
         })
