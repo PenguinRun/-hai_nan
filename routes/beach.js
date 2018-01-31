@@ -7,5 +7,6 @@ getBeach = new GetBeach();
 
 // 提取淨灘通報
 router.get('/', getBeach.getBeachData);
+router.get('/geojson', getBeach.getBeachGeojson);
 
 module.exports = router;
