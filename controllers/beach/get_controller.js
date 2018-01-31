@@ -21,7 +21,10 @@ module.exports = class GetBeach {
               let f = {
                 type: 'Feature',
                 id: result[k].id,
-                geometry: result[k].geojson,
+                geometry: {
+                  type: 'LineString',
+                  coordinates: result[k].geojson
+                },
                 properties: {
                   city: result[k].city,
                   beachName: result[k].beachName,
