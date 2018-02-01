@@ -3,7 +3,7 @@ const client = require('../../config/postgresql');
 module.exports = function getNotification(id) {
     return new Promise((resolve, reject) => {
         const query = {
-            text: 'SELECT events.*, targets.title, targets.city, targets.geojson FROM events INNER JOIN targets ON events.target_id = targets.id'
+            text: 'SELECT events.*, targets.title AS target_title, targets.city, targets.geojson FROM events INNER JOIN targets ON events.target_id = targets.id'
         }
         client.query(query, async (err, res) => {
             if (err) {
@@ -17,8 +17,9 @@ module.exports = function getNotification(id) {
                     data.targetID = res.rows[key].target_id;
                     data.city = res.rows[key].city;
                     data.beachName = res.rows[key].title.substring(0, res.rows[key].title.indexOf("-"));
-                    data.title = res.rows[key].title;
+                    data.beachTitle = res.rows[key].target_title;
                     data.description = res.rows[key].description;
+                    data.title = res.rows[key].title;
                     let geojson = JSON.parse(res.rows[key].geojson);
                     data.geojson = geojson.coordinates;
                     data.contact = res.rows[key].contact;
