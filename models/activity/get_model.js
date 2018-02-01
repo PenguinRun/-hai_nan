@@ -3,7 +3,7 @@ const client = require('../../config/postgresql');
 module.exports = function getNotification(id) {
     return new Promise((resolve, reject) => {
         const query = {
-            text: 'SELECT * from events'
+            text: 'SELECT events.*, targets.title, targets.city, targets.geojson FROM events INNER JOIN targets ON events.target_id = targets.id'
         }
         client.query(query, async (err, res) => {
             if (err) {
@@ -13,11 +13,14 @@ module.exports = function getNotification(id) {
                 let result = [];
                 for (let key in res.rows) {
                     let data = {};
+                    data.id = res.rows[key].id;
                     data.targetID = res.rows[key].target_id;
-                    let targetName = await getTargetName(res.rows[key].target_id);
-                    data.targetName = targetName.title;
+                    data.city = res.rows[key].city;
+                    data.beachName = res.rows[key].title.substring(0, res.rows[key].title.indexOf("-"));
                     data.title = res.rows[key].title;
                     data.description = res.rows[key].description;
+                    let geojson = JSON.parse(res.rows[key].geojson);
+                    data.geojson = geojson.coordinates;
                     data.contact = res.rows[key].contact;
                     data.dateTime = res.rows[key].date_time;
                     data.place = res.rows[key].place;
@@ -29,23 +32,6 @@ module.exports = function getNotification(id) {
                     result.push(data);
                 }
                 resolve(result);
-            }
-        })
-    })
-}
-
-function getTargetName(targetID) {
-    return new Promise((resolve, reject) => {
-        const query = {
-            text: 'SELECT title FROM targets WHERE id =$1',
-            values: [targetID]
-        }
-        client.query(query, (err, res) => {
-            if (err) {
-                console.log(err.stack);
-                reject(err)
-            } else {
-                resolve(res.rows[0]);
             }
         })
     })

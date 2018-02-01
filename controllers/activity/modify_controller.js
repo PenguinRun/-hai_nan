@@ -22,7 +22,7 @@ module.exports = class ModifyActivity {
                 res.status(400).json({
                     result: {
                         state: "建立淨灘活動失敗！",
-                        err: "請輸入 " + key + " 值。"
+                        err: "請輸入 " + key + " 值。" 
                     }
                 })
                 return;
