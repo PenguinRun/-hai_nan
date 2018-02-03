@@ -12,21 +12,26 @@ module.exports = class GetLogin {
 
         req.session.fbID = req.user.id;
 
-        loginAction(signData).then(result => {
-            res.redirect('https://' + config.frontEndHost + '/#!index');
-        }, err =>{
-            res.redirect('https://' + config.frontEndHost + '/#!index');
-        })
+
+        res.redirect('https://' + config.frontEndHost + '/#!index');
+
+        // loginAction(signData).then(result => {
+        //     res.redirect('https://' + config.frontEndHost + '/#!index');
+        // }, err =>{
+        //     res.redirect('https://' + config.frontEndHost + '/#!index');
+        // })
     }
     // 測試登入
     testLogin(req, res, next) {
         const test = req.body.id;
         const token = req.headers["x-access-token"];
         const fbID = req.session.fbID;
-        console.log(test);
-        console.log(token);
+        console.log("test id: " + test);
+        console.log("token: " + token);
 
-        console.log(fbID);
+        console.log("fbID: " + fbID);
+
+        console.log(req.headers);
 
         res.json({
             result:{
