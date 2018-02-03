@@ -56,7 +56,6 @@ app.use(require('express-session')({
   cookie: {
     domain: config.domains,
     httpOnly: false,
-    id: req.session.fbID
   }
 }));
 
