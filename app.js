@@ -33,6 +33,8 @@ app.use(function (req, res, next) {
 
   res.header('Access-Control-Expose-Headers', 'x-access-token')
 
+  res.header('Access-Control-Allow-Credentials', true);
+
   next()
 })
 
@@ -49,7 +51,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // passport-middleware
-app.use(require('express-session')({ secret: config.sessionSecret, resave: true, saveUninitialized: true}));
+app.use(require('express-session')({ secret: config.sessionSecret, resave: true, saveUninitialized: true, cookie: {
+  domain: config.domains,
+  maxAge: 1000 * 60 * 24 // 24 hours
+}}));
 app.use(passport.initialize());
 app.use(passport.session());
 
