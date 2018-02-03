@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 const passport = require('passport');
+const MemoryStore = express.session.MemoryStore();
+const sessionStore = new MemoryStore();
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -53,6 +55,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // passport-middleware
 app.use(require('express-session')({
   secret: config.sessionSecret, resave: true, saveUninitialized: true,
+  store: sessionStore,
   cookie: {
     domain: config.domains,
     httpOnly: false,

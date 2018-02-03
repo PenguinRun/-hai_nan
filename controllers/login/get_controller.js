@@ -10,8 +10,7 @@ module.exports = class GetLogin {
             email: req.user.emails,
         }
 
-        console.log(req.user);
-        console.log(req.user.id);
+        console.log(session.store);
 
         req.session.fbID = req.user.id;
 
@@ -36,6 +35,12 @@ module.exports = class GetLogin {
 
         console.log(req.headers);
 
+
+        let test = sessionStore.get((sid, result)=>{
+            return result;
+        })
+
+        console.log(test);
 
         console.log(req.session);
 
