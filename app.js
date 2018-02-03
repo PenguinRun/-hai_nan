@@ -49,7 +49,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // passport-middleware
-app.use(require('express-session')({ secret: config.sessionSecret, resave: true, saveUninitialized: true, cookie:{ domain: config.domains} }));
+app.use(require('express-session')({ secret: config.sessionSecret, resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 

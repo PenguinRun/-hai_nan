@@ -11,6 +11,7 @@ passport.use(new FacebookStrategy({
     profileFields: ['id', 'emails', 'name', 'displayName']
 },
     function (accessToken, refreshToken, profile, done) {
+        console.log(config.backEndHost);
         return done(null, profile);
     }
 ));

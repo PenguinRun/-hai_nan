@@ -11,6 +11,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
+  // console.log("https://" + config.backEndHost + "/api/beach/login/facebook/callback")
   res.render('index', { title: 'Express'})
 });
 
