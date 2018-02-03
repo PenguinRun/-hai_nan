@@ -9,6 +9,6 @@ module.exports = class GetLogin {
         // console.log(req,obj);
         req.session.fbID = req.user.id;
         // res.redirect("http://localhost:3000/test");
-        res.redirect("https://" + config.frontEndHost + "/test");
+        res.redirect("https://" + config.backEndHost + "/test");
     }
 }
