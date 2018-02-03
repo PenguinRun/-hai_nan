@@ -52,8 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // passport-middleware
 app.use(require('express-session')({ secret: config.sessionSecret, cookie: {
-  domain: config.domains,
-  maxAge: 1000 * 60 * 24 // 24 hours
+  domain: config.BACK_END_HOST
 }}));
 app.use(passport.initialize());
 app.use(passport.session());
