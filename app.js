@@ -1,4 +1,6 @@
 require('dotenv').config()
+const config = require('./config/development_config');
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -6,9 +8,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// session-middleware
+
+var session = require('express-session');
+
 const passport = require('passport');
-const MemoryStore = express.session.MemoryStore();
-const sessionStore = new MemoryStore();
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -17,8 +21,6 @@ const crawler = require('./routes/crawler');
 const notification = require('./routes/notification');
 const beach = require('./routes/beach');
 const activity = require('./routes/activity');
-
-const config = require('./config/development_config');
 
 var app = express();
 
@@ -52,10 +54,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// passport-middleware
-app.use(require('express-session')({
+// var memoryStore =  express-session.MemoryStore();
+
+// var sessionStore =  memoryStore();
+
+// var sessionObject = session;
+
+// set passport middleware
+app.use(session({
   secret: config.sessionSecret, resave: true, saveUninitialized: true,
-  store: sessionStore,
+  // store: sessionStore,
   cookie: {
     domain: config.domains,
     httpOnly: false,
