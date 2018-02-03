@@ -10,6 +10,9 @@ module.exports = class GetLogin {
             email: req.user.emails,
         }
 
+        console.log(req.user);
+        console.log(req.user.id);
+
         req.session.fbID = req.user.id;
 
 
