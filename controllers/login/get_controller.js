@@ -1,14 +1,21 @@
-// const loginAction = require('../')
+const loginAction = require('../../models/login/login_model');
 const config = require('../../config/development_config');
 
 module.exports = class GetLogin {
     // 登入後進行註冊資料
     register(req, res, next) {
-        console.log(req.user);
-        console.log(req.sessionID)
-        // console.log(req,obj);
+        const signData = {
+            id: req.user.id,
+            displayName: req.user.displayName,
+            email: req.user.emails,
+        }
+
         req.session.fbID = req.user.id;
-        // res.redirect("http://localhost:3000/test");
-        res.redirect('https://' + config.frontEndHost + '/#!index');
+
+        loginAction(signData).then(result => {
+            res.redirect('https://' + config.frontEndHost + '/#!index');
+        }, err =>{
+            res.redirect('https://' + config.frontEndHost + '/#!index');
+        })
     }
 }
