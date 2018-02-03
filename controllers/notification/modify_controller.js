@@ -7,6 +7,17 @@ module.exports = class ModifyNotification {
     postNotificationData(req, res, next) {
         // 缺少登入判斷
 
+        console.log(req.user);
+        console.log(req.sessionID);
+        console.log(req.headers["x-access-token"]);
+        
+        const sessionID = req.sessionID;
+        const token = req.headers["x-access-token"];
+
+        if (sessionID === token) {
+            
+        }
+
         const targetID = req.body.targetID;
         const description = req.body.description;
         const imageURL = req.body.imageURL;
