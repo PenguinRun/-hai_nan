@@ -1,4 +1,8 @@
 HOST_IP = 'set your host ip'
+FRONT_END_HOST = 'set your frontend domain'
+BACK_END_HOST = 'set your backend domain'
+
+DOMAINS = 'set your domain name'
 
 FACEBOOK_APPID = 'set your facebook appid'
 FACEBOOK_KEY = 'set your facebook key'

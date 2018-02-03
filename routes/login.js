@@ -1,21 +1,25 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('../config/passport');
+const config = require('../config/development_config');
 
-const LoginAction = require('../controllers/login/get_controller');
+const GetLogin = require('../controllers/login/get_controller');
 
-loginAction = new LoginAction();
+getLogin = new GetLogin();
 
-router.get('/success', function(req, res, next) {
-    res.render('success', {data: req.user});
+router.get('/success', function (req, res, next) {
+    res.render('success', { data: req.user });
 })
 
-router.get('/login/facebook', passport.authenticate('facebook', { scope : ['email'] }));
+router.get('/login/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
 router.get('/login/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/login/redirect',
-                                      failureRedirect: 'https://hainan.oss.tw/#!index' }));
+    //   passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/api/beach/login/redirect',
+    passport.authenticate('facebook', {
+        successRedirect: 'https://' + config.backEndHost + '/api/beach/login/redirect',
+        failureRedirect: 'https://' + config.frontEndHost + '/#!index'
+    }));
 
-// router.get('/login/redirect', loginAction.);
+router.get('/login/redirect', getLogin.register);
 
 module.exports = router;
