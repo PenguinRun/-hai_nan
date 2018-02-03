@@ -22,4 +22,6 @@ router.get('/login/facebook/callback',
 
 router.get('/login/redirect', getLogin.register);
 
+router.post('/testLogin', getLogin.testLogin);
+
 module.exports = router;

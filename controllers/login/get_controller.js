@@ -18,4 +18,22 @@ module.exports = class GetLogin {
             res.redirect('https://' + config.frontEndHost + '/#!index');
         })
     }
+    // 測試登入
+    testLogin(req, res, next) {
+        const test = req.body.id;
+        const token = req.headers["x-access-token"];
+        const fbID = req.session.fbID;
+        console.log(test);
+        console.log(token);
+
+        console.log(fbID);
+
+        res.json({
+            result:{
+                test: test,
+                token: token,
+                fbID: fbID
+            }
+        })        
+    }
 }
