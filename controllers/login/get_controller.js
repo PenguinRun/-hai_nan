@@ -33,6 +33,9 @@ module.exports = class GetLogin {
 
         console.log(req.headers);
 
+
+        console.log(req.session);
+
         res.json({
             result:{
                 test: test,
