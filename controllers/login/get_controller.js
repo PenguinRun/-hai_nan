@@ -33,7 +33,7 @@ module.exports = class GetLogin {
         const token = req.headers["x-access-token"];
         const fbID = req.session.fbID;
 
-        res.app.get('sessionStore').get(token, function (e, c) {
+        res.app.get('sessionMemory').get(token, function (e, c) {
             console.log("err: " + e);
             console.log("data: " + c);
         })

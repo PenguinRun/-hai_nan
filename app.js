@@ -65,13 +65,7 @@ app.use(session({
   }
 }));
 
-let token = app.use(function (req, res, next) {
-  return req.headers["x-access-token"];
-});
-
-sessionMemory.get(token, function(error, session){
-  console.log(session);
-});
+app.set('sessionMemory', sessionMemory);
 
 // app.use(sessionMiddleware);
 
