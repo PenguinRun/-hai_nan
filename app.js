@@ -54,23 +54,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// var memoryStore =  express-session.MemoryStore();
+let sessionMemory = new session.MemoryStore();
 
-// var sessionStore =  memoryStore();
-
-// var sessionObject = session;
-var sessionStore = new session.MemoryStore();
-
-var sessionMiddleware = session({
+app.use(session({
   secret: config.sessionSecret, resave: true, saveUninitialized: true,
-  store: sessionStore,
+  store: sessionMemory,
   cookie: {
     domain: config.domains,
     httpOnly: false,
   }
-});
+}));
 
-app.use(sessionMiddleware);
+var token = req.headers["x-access-token"];
+
+sessionMemory.get(token, callback((error, session)=>{
+  console.log(session);
+}));
+
+// app.use(sessionMiddleware);
 
 // set passport middleware
 app.use(passport.initialize());
