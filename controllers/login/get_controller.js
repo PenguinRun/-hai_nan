@@ -25,9 +25,20 @@ module.exports = class GetLogin {
     }
     // 測試登入
     testLogin(req, res, next) {
+
+        // req.session.data = 'hello world';
+
+
         const test = req.body.id;
         const token = req.headers["x-access-token"];
         const fbID = req.session.fbID;
+
+        res.app.get('sessionStore').get(token, function (e, c) {
+            console.log("err: " + e);
+            console.log("data: " + c);
+        })
+
+
         console.log("test id: " + test);
         console.log("token: " + token);
 
@@ -36,7 +47,7 @@ module.exports = class GetLogin {
         console.log(req.headers);
 
 
-        let test = sessionStore.get((sid, result)=>{
+        let test = sessionStore.get((sid, result) => {
             return result;
         })
 
@@ -45,11 +56,11 @@ module.exports = class GetLogin {
         console.log(req.session);
 
         res.json({
-            result:{
+            result: {
                 test: test,
                 token: token,
                 fbID: fbID
             }
-        })        
+        })
     }
 }
