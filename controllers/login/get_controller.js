@@ -47,17 +47,16 @@ module.exports = class GetLogin {
         console.log(req.headers);
 
 
-        let test = sessionStore.get((sid, result) => {
-            return result;
-        })
+        // let test = sessionStore.get((sid, result) => {
+        //     return result;
+        // })
 
-        console.log(test);
+        // console.log(test);
 
         console.log(req.session);
 
         res.json({
             result: {
-                test: test,
                 token: token,
                 fbID: fbID
             }
