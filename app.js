@@ -70,6 +70,8 @@ var sessionMiddleware = session({
   }
 });
 
+app.set('sessionStore', sessionStore);
+
 app.use(sessionMiddleware);
 
 // set passport middleware
