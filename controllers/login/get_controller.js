@@ -12,6 +12,13 @@ module.exports = class GetLogin {
 
         req.session.fbID = req.user.id;
 
+        req.session.save(function (err) {
+            console.log(err);
+            res.app.get('sessionMemory').get(req.session.id, function (e, c) {
+                console.log("err: " + e);
+                console.log("data: " + c);
+            })
+        });
 
         res.redirect('https://' + config.frontEndHost + '/#!index');
 
