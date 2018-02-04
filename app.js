@@ -59,17 +59,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 // var sessionStore =  memoryStore();
 
 // var sessionObject = session;
+var sessionStore = new session.MemoryStore();
 
-// set passport middleware
-app.use(session({
+var sessionMiddleware = session({
   secret: config.sessionSecret, resave: true, saveUninitialized: true,
-  // store: sessionStore,
+  store: sessionStore,
   cookie: {
     domain: config.domains,
     httpOnly: false,
   }
-}));
+});
 
+app.use(sessionMiddleware);
+
+// set passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
