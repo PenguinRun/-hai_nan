@@ -14,14 +14,14 @@ router.get('/success', function (req, res, next) {
 router.get('/login/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
 router.get('/login/facebook/callback',
-    //   passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/api/beach/login/redirect',
-    passport.authenticate('facebook', {
-        successRedirect: 'https://' + config.backEndHost + '/api/beach/login/redirect',
+      passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/api/beach/login/redirect',
+    // passport.authenticate('facebook', {
+    //     successRedirect: 'https://' + config.backEndHost + '/api/beach/login/redirect',
         failureRedirect: 'https://' + config.frontEndHost + '/#!index'
     }));
 
 router.get('/login/redirect', getLogin.register);
 
-router.post('/testLogin', getLogin.testLogin);
+router.get('/login/token', getLogin.getToken);
 
 module.exports = router;

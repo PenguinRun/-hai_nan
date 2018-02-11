@@ -1,70 +1,39 @@
-const loginAction = require('../../models/login/login_model');
+const registerAction = require('../../models/login/login_model');
 const config = require('../../config/development_config');
 
 module.exports = class GetLogin {
     // 登入後進行註冊資料
     register(req, res, next) {
+        // console.log(req.user);
         const signData = {
             id: req.user.id,
             displayName: req.user.displayName,
-            email: req.user.emails,
+            email: req.user.emails[0].value,
         }
 
-        req.session.fbID = req.user.id;
+        let fbID = req.user.id;
 
-        req.session.save(function (err) {
-            console.log(err);
-            res.app.get('sessionMemory').get(req.session.id, function (e, c) {
-                console.log("err: " + e);
-                console.log("data: " + c);
-            })
-        });
-
-        res.redirect('https://' + config.frontEndHost + '/#!index');
-
-        // loginAction(signData).then(result => {
-        //     res.redirect('https://' + config.frontEndHost + '/#!index');
-        // }, err =>{
-        //     res.redirect('https://' + config.frontEndHost + '/#!index');
-        // })
-    }
-    // 測試登入
-    testLogin(req, res, next) {
-
-        // req.session.data = 'hello world';
-
-
-        const test = req.body.id;
-        const token = req.headers["x-access-token"];
-        const fbID = req.session.fbID;
-
-        res.app.get('sessionMemory').get(token, function (e, c) {
-            console.log("err: " + e);
-            console.log("data: " + c);
+        registerAction(signData).then(result => {
+            // res.redirect('https://' + config.frontEndHost + '/#!index/'+ "?id=" + fbID);
+            res.redirect('http://localhost:3000/test/?id=' + fbID);
         })
-
-
-        console.log("test id: " + test);
-        console.log("token: " + token);
-
-        console.log("fbID: " + fbID);
-
-        console.log(req.headers);
-
-
-        // let test = sessionStore.get((sid, result) => {
-        //     return result;
-        // })
-
-        // console.log(test);
-
-        console.log(req.session);
-
+    }
+    // 取得token
+    getToken(req, res, next) {
+        // const id = req // id來源。
+        const token = jwt.sign({
+            algorithm: 'HS256',
+            exp: Math.floor(Date.now() / 1000) + (60 * 60), // token一個小時後過期。
+            data: rows[0].id
+        }, config.secretKey);
+        res.setHeader('token', token);
         res.json({
             result: {
-                token: token,
-                fbID: fbID
+                status: "登入成功。",
+                loginMember: "歡迎 " + rows[0].name + " 的登入！",
+                // token: token
             }
         })
+
     }
 }

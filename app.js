@@ -57,13 +57,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 let sessionMemory = new session.MemoryStore();
 
 app.use(session({
-  secret: config.sessionSecret, resave: true, saveUninitialized: true,
-  store: sessionMemory,
-  cookie: {
-    domain: config.domains,
-    httpOnly: false,
-  }
-}));
+  secret: config.sessionSecret, resave: true, saveUninitialized: true}));
 
 app.set('sessionMemory', sessionMemory);
 

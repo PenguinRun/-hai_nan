@@ -6,12 +6,11 @@ const passport = require('passport')
 passport.use(new FacebookStrategy({
     clientID: config.facebook.id,
     clientSecret: config.facebook.key,
-    callbackURL: "https://" + config.backEndHost + "/api/beach/login/facebook/callback",
-    // callbackURL: "http://localhost:3000/api/beach/login/facebook/callback",
+    // callbackURL: "https://" + config.backEndHost + "/api/beach/login/facebook/callback",
+    callbackURL: "http://localhost:3000/api/beach/login/facebook/callback",
     profileFields: ['id', 'emails', 'name', 'displayName']
 },
     function (accessToken, refreshToken, profile, done) {
-        console.log(config.backEndHost);
         return done(null, profile);
     }
 ));
